@@ -1,0 +1,43 @@
+from django.db import models
+
+# Create your models here.
+class Greeting(models.Model):
+    when = models.DateTimeField("date created", auto_now_add=True)
+
+
+class ComTradeData(models.Model):
+    pfCode = models.CharField(max_length=50)
+    yr = models.IntegerField()
+    period = models.IntegerField()
+    periodDesc = models.CharField(max_length=50)
+    aggrLevel = models.IntegerField()
+    IsLeaf = models.IntegerField()
+    rgCode = models.IntegerField()
+    rgDesc = models.CharField(max_length=50)
+    rtCode = models.IntegerField()
+    rtTitle = models.CharField(max_length=50)
+    rt3ISO = models.IntegerField()
+    ptCode = models.IntegerField()
+    ptTitle = models.CharField(max_length=50)
+    pt3ISO = models.IntegerField()
+    ptCode2 = models.CharField(max_length=50)
+    ptTitle2 = models.CharField(max_length=50)
+    pt3ISO2 = models.CharField(max_length=50)
+    cstCode = models.CharField(max_length=50)
+    cstDesc = models.CharField(max_length=50)
+    motCode = models.CharField(max_length=50)
+    motDesc = models.CharField(max_length=50)
+    cmdCode = models.CharField(max_length=50)
+    cmdDescE = models.CharField(max_length=50)
+    qtCode = models.IntegerField()
+    qtDesc = models.IntegerField()
+    qtAltCode = models.IntegerField()
+    qtAltDesc = models.CharField(max_length=50)
+    TradeQuantity = models.IntegerField()
+    AltQuantity = models.IntegerField()
+    NetWeight = models.IntegerField()
+    GrossWeight = models.IntegerField()
+    TradeValue = models.IntegerField()
+    CIFValue = models.IntegerField()
+    FOBValue = models.IntegerField()
+    estCode = models.IntegerField()
