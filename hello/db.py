@@ -10,13 +10,13 @@ load_dotenv()
 
 
 class DB:
-    def __init__(self):
-        self.conn_string = "postgresql://" + os.getenv('user') + ":" + os.getenv('password') + "@" + os.getenv('host') \
-                           + ":" + os.getenv('port') + "/" + os.getenv('name')
-        self.supervisor_table = os.getenv('supervisor_table')
-        self.db = create_engine(self.conn_string)
+    def __init__(self, conn_string, supervisor_table, trade_data_table):
+        self.supervisor_table = supervisor_table
+        self.db = create_engine(conn_string)
+        self.trade_data = trade_data_table
 
-        self.trade_data = os.getenv('comtrade_data_table')
+    def is_response_ok(self, response):
+        return response == '<Response [200]>'
 
     def execute_query(self, query):
         sql = text(query)
@@ -75,9 +75,9 @@ class DB:
         return total_records, response
 
     # Tell if rtcode, ptcode, period exist in trade_data
-    def is_exist_in_trade_data(self, country, year, month, country2, flow):
+    def is_exist_in_trade_data(self, country1, country2, year, month, flow):
         query = "SELECT EXISTS(SELECT \"period\" from \"" + self.trade_data + \
-                "\" WHERE \"rtCode\"=" + country + " and period = " + year + month + " and \"ptCode\"=" + country2 \
+                "\" WHERE \"rtCode\"=" + country1 + " and period = " + year + month + " and \"ptCode\"=" + country2 \
                 + " and \"rgCode\"=" + flow + ")"
         result = self.execute_query(query)
         for record in result:

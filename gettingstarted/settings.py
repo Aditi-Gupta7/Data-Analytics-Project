@@ -26,7 +26,7 @@ IS_HEROKU = "DYNO" in os.environ
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "CHANGE_ME!!!! (P.S. the SECRET_KEY environment variable will be used, if set, instead)."
+SECRET_KEY = "CHANGE_ME!!!! (P.S. the SECRET_KEY environment.py variable will be used, if set, instead)."
 
 if 'SECRET_KEY' in os.environ:
     SECRET_KEY = os.environ["SECRET_KEY"]
@@ -109,11 +109,11 @@ DATABASES = {
 # }
 
 if "DATABASE_URL" in os.environ:
-    # Configure Django for DATABASE_URL environment variable.
+    # Configure Django for DATABASE_URL environment.py variable.
     DATABASES["default"] = dj_database_url.config(
         conn_max_age=MAX_CONN_AGE, ssl_require=True)
 
-    # Enable test database if found in CI environment.
+    # Enable test database if found in CI environment.py.
     if "CI" in os.environ:
         DATABASES["default"]["TEST"] = DATABASES["default"]
 
