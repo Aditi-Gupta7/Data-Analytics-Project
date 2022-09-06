@@ -13,7 +13,7 @@ load_dotenv()
 # Dev branch
 class Main:
     def __init__(self):
-        print("Starting the process - Dev")
+        print("Starting the process - Master")
         self.validate_wait()
 
         # Database related variables
