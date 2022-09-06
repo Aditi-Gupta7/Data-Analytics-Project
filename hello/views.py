@@ -3,10 +3,10 @@ import sys
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 import django
-from comtrade import Comtrade
-from un import UN
-from db import DB
-from config import Config
+from hello.comtrade import Comtrade
+from hello.config import Config
+from hello.un import UN
+
 django.setup()
 load_dotenv()
 

@@ -1,8 +1,9 @@
-from api import API
-from un import UN
-from supervisorcomtrade import SupervisorComtrade
-from config import Config
+from hello.api import API
+from hello.un import UN
+from hello.supervisorcomtrade import SupervisorComtrade
+from hello.config import Config
 import time
+
 
 class Comtrade:
     def __init__(self):
@@ -40,19 +41,21 @@ class Comtrade:
         api = API()
         is_response_error = api.is_response_error(response)
         if not is_response_error:
-            record_added = self.process_data_api_success_response(dataframe, database, country1, year,
-                                                                           month)
+            record_added = self.process_data_api_success_response(dataframe, database, country1, year, month, sc)
             if record_added:
                 sc.record_added = True
         else:
             sc.is_call_trade_data_api_error = True
             print("Failed to call API for rtCode:", country1, ", ps:", year + month, "ptCode:", country2)
 
-    def process_data_api_success_response(self, dataframe, database, country, year, month):
+    def process_data_api_success_response(self, dataframe, database, country, year, month, sc):
         record_added = False
         if not dataframe.empty:
-            database.write_data(dataframe, self.config.env.comtrade_data_table, 'append', country, year, month)
-            record_added = True
+            try:
+                database.write_data(dataframe, self.config.env.comtrade_data_table, 'append', country, year, month)
+                record_added = True
+            except:
+                sc.is_call_trade_data_api_error = True
         return record_added
 
 

@@ -1,9 +1,9 @@
-from config import Config
+from hello.config import Config
 
 
 class Comment():
     def __init__(self):
-        self.FAIL = "Failed to call data API for some records. Check logs"
+        self.FAIL = "Error occurred. Check logs"
         self.RecordsAdded = "Records added"
         self.AllEmpty = "All responses are empty"
         self.AllExists = "Record already exists"
@@ -27,6 +27,7 @@ class SupervisorComtrade():
 
     def __update_comment(self, comment, country, year, month):
         self.db.update_comment_in_supervisor_table(country, year, month, comment)
+        print(comment)
 
     def log_comment(self, country, year, month):
         comment = Comment()

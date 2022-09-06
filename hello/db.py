@@ -1,5 +1,3 @@
-import os
-import time
 from sqlalchemy.exc import IntegrityError
 from psycopg2.errors import UniqueViolation
 from sqlalchemy import create_engine
@@ -37,15 +35,13 @@ class DB:
     # Write data to supervisor table
     def write_data(self, df, table_name, ifexists, country, year, month):
         try:
-            # time.sleep(5)
-            # print(df)
             df.to_sql(table_name, con=self.db, if_exists=ifexists, index=False)
             return True
         except IntegrityError as e:
             if isinstance(e.orig, UniqueViolation):
                 print("--Unique Value Violation--")
         except Exception as err:
-            print(f'Error occurred while writing to database: {err}')
+            print(f'Error occurred while writing to database, please try again')
             return False
 
     # Get value stored Response column of Supervisor table
