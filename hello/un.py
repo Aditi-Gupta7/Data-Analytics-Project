@@ -1,26 +1,8 @@
-import time
-import os
 import pandas as pd
-import requests
+from hello.api import API
 
 
-class UN:
-    # Get response from API in JSON
-    def get_response(self, url):
-        response = ''
-        data = ''
-        try:
-            response = requests.get(url, timeout=20)
-            response.raise_for_status()
-            data = response.json()
-        except requests.exceptions.Timeout:
-            response = 'Error'
-            print("--Timeout Exception for --", url)
-        except Exception as err:
-            response = 'Error'
-            print(f'Other error occurred 3: {err}', url)
-        return data, response
-
+class UN(API):
     # Convert JSON to dataframe
     def to_dataframe(self, json, response, rec_path=None):
         df = pd.DataFrame()

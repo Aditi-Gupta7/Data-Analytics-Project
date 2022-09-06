@@ -1,5 +1,3 @@
-import os
-import time
 from sqlalchemy.exc import IntegrityError
 from psycopg2.errors import UniqueViolation
 from sqlalchemy import create_engine
@@ -10,13 +8,13 @@ load_dotenv()
 
 
 class DB:
-    def __init__(self):
-        self.conn_string = "postgresql://" + os.getenv('user') + ":" + os.getenv('password') + "@" + os.getenv('host') \
-                           + ":" + os.getenv('port') + "/" + os.getenv('name')
-        self.supervisor_table = os.getenv('supervisor_table')
-        self.db = create_engine(self.conn_string)
+    def __init__(self, conn_string, supervisor_table, trade_data_table):
+        self.supervisor_table = supervisor_table
+        self.db = create_engine(conn_string)
+        self.trade_data = trade_data_table
 
-        self.trade_data = os.getenv('comtrade_data_table')
+    def is_response_ok(self, response):
+        return response == '<Response [200]>'
 
     def execute_query(self, query):
         sql = text(query)
@@ -37,15 +35,13 @@ class DB:
     # Write data to supervisor table
     def write_data(self, df, table_name, ifexists, country, year, month):
         try:
-            # time.sleep(5)
-            # print(df)
             df.to_sql(table_name, con=self.db, if_exists=ifexists, index=False)
             return True
         except IntegrityError as e:
             if isinstance(e.orig, UniqueViolation):
                 print("--Unique Value Violation--")
         except Exception as err:
-            print(f'Error occurred while writing to database: {err}')
+            print(f'Error occurred while writing to database, please try again')
             return False
 
     # Get value stored Response column of Supervisor table
@@ -75,9 +71,9 @@ class DB:
         return total_records, response
 
     # Tell if rtcode, ptcode, period exist in trade_data
-    def is_exist_in_trade_data(self, country, year, month, country2, flow):
+    def is_exist_in_trade_data(self, country1, country2, year, month, flow):
         query = "SELECT EXISTS(SELECT \"period\" from \"" + self.trade_data + \
-                "\" WHERE \"rtCode\"=" + country + " and period = " + year + month + " and \"ptCode\"=" + country2 \
+                "\" WHERE \"rtCode\"=" + country1 + " and period = " + year + month + " and \"ptCode\"=" + country2 \
                 + " and \"rgCode\"=" + flow + ")"
         result = self.execute_query(query)
         for record in result:

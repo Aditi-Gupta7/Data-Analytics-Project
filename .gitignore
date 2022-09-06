@@ -4,3 +4,6 @@ staticfiles
 .env
 db.sqlite3
 getting-started/*
+test.py
+comtrade_api.csv
+api_proxy.py
