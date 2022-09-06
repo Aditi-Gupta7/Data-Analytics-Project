@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="98a8cba9-9ab7-47af-933d-37021620d27b" name="Changes" comment="Adding comment for dev branch">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="3b65b83a-8e91-49ea-93f9-c562c9c36a5b" name="Changes" comment="Adding comment for dev branch">
       <change beforePath="$PROJECT_DIR$/hello/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/hello/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
