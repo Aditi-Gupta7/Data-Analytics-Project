@@ -6,6 +6,7 @@ admin.autodiscover()
 
 import hello.views
 
+#URLS.PY IN This project
 # To add a new path, first import the app:
 # import blog
 #
